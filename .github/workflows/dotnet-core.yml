@@ -20,6 +20,6 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore api/api.sln
     - name: Test
-      run: dotnet test --no-restore --verbosity normal api/Api.Tests/Api.Tests.csproj
+      run: dotnet test --no-restore --verbosity normal api/api.sln
