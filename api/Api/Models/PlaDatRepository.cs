@@ -14,6 +14,6 @@ namespace Api.Models
             this.context = context;
         }
 
-        //Insert repository methods here
+        // Insert repository methods here
     }
 }
