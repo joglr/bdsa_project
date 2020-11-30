@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer, Dispatch } from "react";
 
 export type State =
   | { status: Status.IDLE }
@@ -28,16 +28,23 @@ type Action =
   | { type: ACTION_TYPE.SUCCEED; response: any }
   | { type: ACTION_TYPE.FAIL; error: string };
 
-const StoreContext = createContext([null]);
+const StoreContext = createContext<[State, Dispatch<Action>]>([
+  getDefaultState(),
+  (action : Action) => {
+    throw new Error('No context provider, did you forget to wrap your tree in <StoreProvider /> ?');
+  }
+]);
 
-export function StoreProvider({ children }) {
+export function StoreProvider({ children } : any) {
   const [state, dispatch] = useReducer<Reducer<State, Action>>(
     reducer,
     getDefaultState()
   );
 
+  const contextValue : [State, Dispatch<Action>] = [state, dispatch];
+
   return (
-    <StoreContext.Provider value={[state, dispatch]}>
+    <StoreContext.Provider value={contextValue}>
       {children}
     </StoreContext.Provider>
   );
@@ -49,7 +56,8 @@ function getDefaultState(): State {
   };
 }
 
-function reducer(prevState: State = null, action: Action = null): State {
+function reducer(prevState: State | null, action: Action | null): State {
+  if (prevState === null || action === null) return getDefaultState();
   switch (action.type) {
     case ACTION_TYPE.SUBMIT:
       return { status: Status.PENDING };
