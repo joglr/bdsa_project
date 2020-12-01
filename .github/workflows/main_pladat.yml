@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - pladat
 on:
   push:
     branches:
-      - staging
+      - main
 
 jobs:
   build-and-deploy:
