@@ -14,6 +14,6 @@ namespace api.Entities
         [StringLength(50)]
         public string LastName { get; set; }
         public ICollection<Capability> Capabilities { get; set; }
-        public ICollection<Placement> Placements { get; set; }
+        public ICollection<StudentPlacement> Placements { get; set; }
     }
 }

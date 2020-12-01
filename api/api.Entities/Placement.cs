@@ -11,7 +11,7 @@ namespace api.Entities
         public Employer EmployerCompany { get; set; }
         public ICollection<Capability> RequiredCapabilities { get; set; }
         public ICollection<Capability> NiceToHaveCapabilities { get; set; }
-        public ICollection<Student> Applicants { get; set; }
+        public ICollection<StudentPlacement> Applicants { get; set; }
         public string PlacementImage { get; set; }
     }
 }
