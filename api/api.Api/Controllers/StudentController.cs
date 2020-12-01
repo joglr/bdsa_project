@@ -20,13 +20,20 @@ namespace api.Api.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("{id}", Name = "GetStudent")]
         public async Task<ActionResult<StudentReadDTO>> GetStudent(int id)
         {
             var student = await Repository.ReadAsync(id);
 
             if (student != null) return student;
-            else return NoContent();
+            else return NotFound();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<StudentReadDTO>>> GetStudents()
+        {
+            var students = await Repository.ReadAllAsync();
+            return students;
         }
 
         [HttpPost]
@@ -35,6 +42,24 @@ namespace api.Api.Controllers
             var id = await Repository.CreateAsync(student);
 
             return CreatedAtAction(nameof(GetStudent), new { id }, default);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var removedId = await Repository.DeleteAsync(id);
+
+            if (removedId == -1) return NotFound();
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] StudentUpdateDTO student)
+        {
+            var updatedId = await Repository.UpdateAsync(id, student);
+
+            if (updatedId == -1) return NotFound();
+            return Ok();
         }
     }
 }
