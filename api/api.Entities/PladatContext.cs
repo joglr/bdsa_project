@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.Entities
+namespace api.Entities
 {
-    public class PlaDatContext : DbContext
+    public class PlaDatContext : DbContext, IPlaDatContext
     {
         public DbSet<Capability> Capabilities { get; set; }
         public DbSet<Employer> Employers { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<Placement> Placements {get; set;}
+        public DbSet<Placement> Placements { get; set; }
 
         public PlaDatContext() { }
 
@@ -18,7 +18,7 @@ namespace Api.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = @"EmptyConnectionString";
+                var connectionString = @"Server=localhost;Database=PlaDatTest;Trusted_Connection=True;MultipleActiveResultSets=true";
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }

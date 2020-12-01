@@ -1,11 +1,11 @@
-using Api.Entities;
+using api.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Api.Models
+namespace api.Models
 {
-    public class PlaDatRepository
+    public class PlaDatRepository : IPlaDatRepository
     {
         private readonly PlaDatContext context;
 

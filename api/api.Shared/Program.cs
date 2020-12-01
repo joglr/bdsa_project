@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Api
+namespace api.Shared
 {
     class Program
     {

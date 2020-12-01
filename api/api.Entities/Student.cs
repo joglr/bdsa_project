@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Api.Entities
+namespace api.Entities
 {
     public class Student
     {
