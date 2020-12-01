@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Entities;
 
 namespace api.Entities.Migrations
 {
     [DbContext(typeof(PlaDatContext))]
-    partial class PlaDatContextModelSnapshot : ModelSnapshot
+    [Migration("20201201130919_addStudentCapability")]
+    partial class addStudentCapability
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,6 +148,21 @@ namespace api.Entities.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("api.Entities.StudentCapability", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CapabilityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentId", "CapabilityId");
+
+                    b.HasIndex("CapabilityId");
+
+                    b.ToTable("StudentCapabilities");
+                });
+
             modelBuilder.Entity("CapabilityStudent", b =>
                 {
                     b.HasOne("api.Entities.Capability", null)
@@ -194,6 +211,25 @@ namespace api.Entities.Migrations
                         .HasForeignKey("EmployerCompanyId");
 
                     b.Navigation("EmployerCompany");
+                });
+
+            modelBuilder.Entity("api.Entities.StudentCapability", b =>
+                {
+                    b.HasOne("api.Entities.Capability", "CapabilityObject")
+                        .WithMany()
+                        .HasForeignKey("CapabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Entities.Student", "StudentObject")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CapabilityObject");
+
+                    b.Navigation("StudentObject");
                 });
 
             modelBuilder.Entity("api.Entities.Placement", b =>

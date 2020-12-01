@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using api.Entities;
 
 namespace api.Models
@@ -31,17 +32,17 @@ namespace api.Models
             context.Employers.AddRange(e1, e2, e3, e4, e5);
 
             // Students
-            var s1 = new Student { FirstName = "Shrek", LastName = "the Ogre", Capabilities = new[] { c3, c5 } };
-            var s2 = new Student { FirstName = "Harry", LastName = "Potter", Capabilities = new[] { c8, c1 } };
-            var s3 = new Student { FirstName = "Darth", LastName = "Vader", Capabilities = new[] { c8, c6, c1 } };
-            var s4 = new Student { FirstName = "Tony", LastName = "Stark", Capabilities = new[] { c5, c6, c4 } };
-            var s5 = new Student { FirstName = "Kaj", LastName = "popkorn", Capabilities = new[] { c2, c4, c7, c1 } };
+            var s1 = new Student { FirstName = "Shrek", LastName = "the Ogre", Capabilities = new List<Capability> { c3, c5 } };
+            var s2 = new Student { FirstName = "Harry", LastName = "Potter", Capabilities = new List<Capability> { c8, c1 } };
+            var s3 = new Student { FirstName = "Darth", LastName = "Vader", Capabilities = new List<Capability> { c8, c6, c1 } };
+            var s4 = new Student { FirstName = "Tony", LastName = "Stark", Capabilities = new List<Capability> { c5, c6, c4 } };
+            var s5 = new Student { FirstName = "Kaj", LastName = "popkorn", Capabilities = new List<Capability> { c2, c4, c7, c1 } };
 
             // Placements
-            var p1 = new Placement { EmployerCompany = e1, RequiredCapabilities = new[] { c1, c8 }, NiceToHaveCapabilities = new[] { c4 }, PlacementImage = "ヽ(⌐■_■)ノ♪♬" };
-            var p2 = new Placement { EmployerCompany = e1, RequiredCapabilities = new[] { c3, c5 }, NiceToHaveCapabilities = new[] { c4 }, PlacementImage = "♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪" };
-            var p3 = new Placement { EmployerCompany = e5, RequiredCapabilities = new[] { c4, c7 }, NiceToHaveCapabilities = new[] { c8 }, PlacementImage = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸" };
-            var p4 = new Placement { EmployerCompany = e3, RequiredCapabilities = new[] { c1, c2 }, NiceToHaveCapabilities = new[] { c7 }, PlacementImage = "__̴ı̴̴̡̡̡ ̡͌l̡̡̡ ̡͌l̡*̡̡ ̴̡ı̴̴̡ ̡̡͡|̲̲̲͡͡͡ ̲▫̲͡ ̲̲̲͡͡π̲̲͡͡ ̲̲͡▫̲̲͡͡ ̲|̡̡̡ ̡ ̴̡ı̴̡̡ ̡͌l̡̡̡̡.___" };
+            var p1 = new Placement { EmployerCompany = e1, Capabilities = new List<Capability> { c1, c8 }, PlacementImage = "ヽ(⌐■_■)ノ♪♬" };
+            var p2 = new Placement { EmployerCompany = e1, Capabilities = new List<Capability> { c3, c5 }, PlacementImage = "♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪" };
+            var p3 = new Placement { EmployerCompany = e5, Capabilities = new List<Capability> { c4, c7 }, PlacementImage = "°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸" };
+            var p4 = new Placement { EmployerCompany = e3, Capabilities = new List<Capability> { c1, c2 }, PlacementImage = "__̴ı̴̴̡̡̡ ̡͌l̡̡̡ ̡͌l̡*̡̡ ̴̡ı̴̴̡ ̡̡͡|̲̲̲͡͡͡ ̲▫̲͡ ̲̲̲͡͡π̲̲͡͡ ̲̲͡▫̲̲͡͡ ̲|̡̡̡ ̡ ̴̡ı̴̡̡ ̡͌l̡̡̡̡.___" };
 
             // StudentPlacements
             var SP1 = new StudentPlacement { Student = s2, Placement = p1 };
@@ -55,13 +56,13 @@ namespace api.Models
             s4.Placements = new StudentPlacement[] { };
             s5.Placements = new[] { SP4 };
 
-            p1.Applicants = new[] { SP1, SP2 };
+            /*p1.Applicants = new List<Student> { SP1, SP2 };
             p2.Applicants = new[] { SP3 };
             p3.Applicants = new[] { SP4 };
             p4.Applicants = new StudentPlacement[] { };
 
             context.Students.AddRange(s1, s2, s3, s4, s5);
-            context.Placements.AddRange(p1, p2, p3, p4);
+            context.Placements.AddRange(p1, p2, p3, p4);*/
 
             context.SaveChanges();
         }

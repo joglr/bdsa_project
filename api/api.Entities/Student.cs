@@ -13,7 +13,7 @@ namespace api.Entities
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
-        public ICollection<Capability> Capabilities { get; set; }
+        public List<Capability> Capabilities { get; set; }
         public ICollection<StudentPlacement> Placements { get; set; }
     }
 }

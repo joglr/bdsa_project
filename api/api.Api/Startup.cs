@@ -34,6 +34,7 @@ namespace api.Api
             services.AddScoped<IPlaDatContext, PlaDatContext>();
 
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ICapabilityRepository, CapabilityRepository>();
 
             services.AddControllers();
             services.AddRouting(options => options.LowercaseUrls = true);

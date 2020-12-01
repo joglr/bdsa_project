@@ -57,6 +57,9 @@ namespace api.Models
             };
 
             await context.Students.AddAsync(entity);
+
+            entity.Capabilities = MapCapabilities(entity.Id, student.Capabilities).Result;
+
             await context.SaveChangesAsync();
 
             return entity.Id;
@@ -91,6 +94,20 @@ namespace api.Models
             await context.SaveChangesAsync();
 
             return entity.Id;
+        }
+
+        private async Task<List<Capability>> MapCapabilities(int capabilityId, List<int> capabilityList)
+        {
+            var capabilities = new List<Capability>();
+
+            foreach (var c in capabilityList)
+            {
+                var entity = await context.Capabilities.FirstOrDefaultAsync(c => c.Id == capabilityId);
+
+                capabilities.Add(entity);
+            }
+
+            return capabilities;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace api.Entities
 {
@@ -12,5 +13,7 @@ namespace api.Entities
         [Required]
         [StringLength(400)]
         public string Description { get; set; }
+        public List<Student> Students { get; set; }
+        public List<Placement> Placements { get; set; }
     }
 }
