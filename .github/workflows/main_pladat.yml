@@ -6,13 +6,13 @@ name: Build and deploy ASP.Net Core app to Azure Web App - pladat
 on:
   push:
     branches:
-      - main
+      - staging
 
 jobs:
   build-and-deploy:
     runs-on: windows-latest
     env:
-      working-directory: ./api/Api 
+      working-directory: ./api/Api
 
     steps:
     - uses: actions/checkout@master
