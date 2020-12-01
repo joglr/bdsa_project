@@ -36,4 +36,4 @@ jobs:
         app-name: 'pladat'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_f405177a26f24537896091b597c176b3 }}
-        package: ${{env.DOTNET_ROOT}}/Api
+        package: ${{env.DOTNET_ROOT}}\myapp
