@@ -11,6 +11,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: windows-latest
+    env:
+      working-directory: ./api/Api 
 
     steps:
     - uses: actions/checkout@master
