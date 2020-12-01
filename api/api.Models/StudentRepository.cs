@@ -37,7 +37,7 @@ namespace api.Models
 
         public async Task<List<StudentReadDTO>> ReadAllAsync()
         {
-            var studensQuery =
+            var studentQuery =
                 from s in context.Students
                 select new StudentReadDTO
                 {
@@ -45,7 +45,7 @@ namespace api.Models
                     FirstName = s.FirstName,
                     LastName = s.LastName
                 };
-            return await studensQuery.ToListAsync();
+            return await studentQuery.ToListAsync();
         }
 
         public async Task<int> CreateAsync(StudentCreateDTO student)

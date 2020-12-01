@@ -33,6 +33,8 @@ namespace api.Api
             services.AddDbContext<PlaDatContext>(o => o.UseSqlServer(@"Server=localhost;Database=PlaDatTest;Trusted_Connection=True;MultipleActiveResultSets=true"));
             services.AddScoped<IPlaDatContext, PlaDatContext>();
 
+            services.AddScoped<IEmployerRepository, EmployerRepository>();
+            services.AddScoped<IPlacementRepository, PlacementRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ICapabilityRepository, CapabilityRepository>();
 
