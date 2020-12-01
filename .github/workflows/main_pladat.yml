@@ -24,9 +24,11 @@ jobs:
 
     - name: Build with dotnet
       run: dotnet build --configuration Release
+      working-directory: ${{env.working-directory}}
 
     - name: dotnet publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      working-directory: ${{env.working-directory}}
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
@@ -34,4 +36,4 @@ jobs:
         app-name: 'pladat'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_f405177a26f24537896091b597c176b3 }}
-        package: ${{env.DOTNET_ROOT}}/myapp 
+        package: ${{env.DOTNET_ROOT}}/Api
