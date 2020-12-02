@@ -66,7 +66,7 @@ namespace api.Models
 
             await context.Placements.AddAsync(entity);
 
-            entity.Capabilities = MapCapabilities(entity.Id, placement.Capabilities).Result;
+            entity.Capabilities = MapCapabilities(placement.Capabilities).Result;
 
             await context.SaveChangesAsync();
 
@@ -97,22 +97,22 @@ namespace api.Models
             }
 
             entity.PlacementImage = placement.PlacementImage;
-            entity.Capabilities = MapCapabilities(id, placement.Capabilities).Result;
+            entity.Capabilities = MapCapabilities(placement.Capabilities).Result;
 
             await context.SaveChangesAsync();
 
             return entity.Id;
         }
 
-        private async Task<List<Capability>> MapCapabilities(int capabilityId, List<int> capabilityList)
+        private async Task<List<Capability>> MapCapabilities(List<int> capabilityList)
         {
             var capabilities = new List<Capability>();
 
-            foreach (var c in capabilityList)
+            foreach (var capabilityId in capabilityList)
             {
                 var entity = await context.Capabilities.FirstOrDefaultAsync(c => c.Id == capabilityId);
 
-                capabilities.Add(entity);
+                if (entity != null) capabilities.Add(entity);
             }
 
             return capabilities;

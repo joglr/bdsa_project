@@ -27,11 +27,16 @@ namespace api.Models
 
             if (student == null) return null;
 
+            List<int> capablities =
+                (from c in student.Capabilities
+                 select c.Id).ToList();
+
             return new StudentReadDTO
             {
                 Id = student.Id,
                 FirstName = student.FirstName,
-                LastName = student.LastName
+                LastName = student.LastName,
+                Capablities = capablities
             };
         }
 
@@ -43,7 +48,10 @@ namespace api.Models
                 {
                     Id = s.Id,
                     FirstName = s.FirstName,
-                    LastName = s.LastName
+                    LastName = s.LastName,
+                    Capablities =
+                        (from c in s.Capabilities
+                         select c.Id).ToList()
                 };
             return await studentQuery.ToListAsync();
         }
@@ -58,7 +66,7 @@ namespace api.Models
 
             await context.Students.AddAsync(entity);
 
-            entity.Capabilities = MapCapabilities(entity.Id, student.Capabilities).Result;
+            entity.Capabilities = MapCapabilities(student.Capabilities).Result;
 
             await context.SaveChangesAsync();
 
@@ -96,15 +104,15 @@ namespace api.Models
             return entity.Id;
         }
 
-        private async Task<List<Capability>> MapCapabilities(int capabilityId, List<int> capabilityList)
+        private async Task<List<Capability>> MapCapabilities(List<int> capabilityList)
         {
             var capabilities = new List<Capability>();
 
-            foreach (var c in capabilityList)
+            foreach (int capabilityId in capabilityList)
             {
                 var entity = await context.Capabilities.FirstOrDefaultAsync(c => c.Id == capabilityId);
 
-                capabilities.Add(entity);
+                if (entity != null) capabilities.Add(entity);
             }
 
             return capabilities;
