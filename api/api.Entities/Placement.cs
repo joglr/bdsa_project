@@ -10,7 +10,7 @@ namespace api.Entities
         [Required]
         public Employer EmployerCompany { get; set; }
         public List<Capability> Capabilities { get; set; }
-        public List<Student> Applicants { get; set; }
+        public List<Student> Students { get; set; }
         public string PlacementImage { get; set; }
     }
 }

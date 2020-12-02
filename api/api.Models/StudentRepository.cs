@@ -36,6 +36,8 @@ namespace api.Models
                 Id = student.Id,
                 FirstName = student.FirstName,
                 LastName = student.LastName,
+                Email = student.Email,
+                PhoneNumber = student.PhoneNumber,
                 Capablities = capablities
             };
         }
@@ -49,6 +51,8 @@ namespace api.Models
                     Id = s.Id,
                     FirstName = s.FirstName,
                     LastName = s.LastName,
+                    Email = s.Email,
+                    PhoneNumber = s.PhoneNumber,
                     Capablities =
                         (from c in s.Capabilities
                          select c.Id).ToList()
@@ -61,7 +65,9 @@ namespace api.Models
             var entity = new Student
             {
                 FirstName = student.FirstName,
-                LastName = student.LastName
+                LastName = student.LastName,
+                Email = student.Email,
+                PhoneNumber = student.PhoneNumber
             };
 
             await context.Students.AddAsync(entity);
@@ -98,6 +104,8 @@ namespace api.Models
 
             entity.FirstName = student.FirstName;
             entity.LastName = student.LastName;
+            entity.Email = student.Email;
+            entity.PhoneNumber = student.PhoneNumber;
 
             await context.SaveChangesAsync();
 

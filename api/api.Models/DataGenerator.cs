@@ -45,7 +45,7 @@ namespace api.Models
             var p4 = new Placement { EmployerCompany = e3, Capabilities = new List<Capability> { c1, c2 }, PlacementImage = "__̴ı̴̴̡̡̡ ̡͌l̡̡̡ ̡͌l̡*̡̡ ̴̡ı̴̴̡ ̡̡͡|̲̲̲͡͡͡ ̲▫̲͡ ̲̲̲͡͡π̲̲͡͡ ̲̲͡▫̲̲͡͡ ̲|̡̡̡ ̡ ̴̡ı̴̡̡ ̡͌l̡̡̡̡.___" };
 
             // StudentPlacements
-            var SP1 = new StudentPlacement { Student = s2, Placement = p1 };
+            /*var SP1 = new StudentPlacement { Student = s2, Placement = p1 };
             var SP2 = new StudentPlacement { Student = s3, Placement = p1 };
             var SP3 = new StudentPlacement { Student = s1, Placement = p2 };
             var SP4 = new StudentPlacement { Student = s5, Placement = p3 };
@@ -56,7 +56,7 @@ namespace api.Models
             s4.Placements = new StudentPlacement[] { };
             s5.Placements = new[] { SP4 };
 
-            /*p1.Applicants = new List<Student> { SP1, SP2 };
+            p1.Applicants = new List<Student> { SP1, SP2 };
             p2.Applicants = new[] { SP3 };
             p3.Applicants = new[] { SP4 };
             p4.Applicants = new StudentPlacement[] { };
