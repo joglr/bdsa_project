@@ -41,6 +41,7 @@ namespace api.Api.Controllers
         {
             var id = await Repository.CreateAsync(placement);
 
+            if (id == -1) return NoContent();
             return CreatedAtAction(nameof(GetPlacement), new { id }, default);
         }
 

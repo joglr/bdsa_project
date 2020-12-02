@@ -81,8 +81,8 @@ namespace api.Models
                 where e.Id == placement.EmployerCompanyId
                 select e;
 
+            if (!await employerQuery.AnyAsync()) return -1;
             var employer = employerQuery.FirstOrDefaultAsync();
-            if (employer == null) return -1;
 
             var entity = new Placement
             {
