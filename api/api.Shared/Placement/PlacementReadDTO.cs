@@ -6,7 +6,7 @@ namespace api.Shared
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public int EmployerCompanyId { get; set; }
+        public EmployerReadDTO Employer { get; set; }
         public string PlacementImage { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }

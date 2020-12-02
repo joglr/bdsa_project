@@ -39,7 +39,13 @@ namespace api.Models
             {
                 Id = placement.Id,
                 Title = placement.Title,
-                EmployerCompanyId = placement.EmployerCompany.Id,
+                Employer = new EmployerReadDTO
+                {
+                    Id = placement.EmployerCompany.Id,
+                    CompanyName = placement.EmployerCompany.CompanyName,
+                    CompanyDescription = placement.EmployerCompany.CompanyDescription,
+                    CompanyImage = placement.EmployerCompany.CompanyImage
+                },
                 PlacementImage = placement.PlacementImage,
                 Description = placement.Description,
                 Location = placement.Location,
@@ -58,7 +64,13 @@ namespace api.Models
                 {
                     Id = p.Id,
                     Title = p.Title,
-                    EmployerCompanyId = p.EmployerCompany.Id,
+                    Employer = new EmployerReadDTO
+                    {
+                        Id = p.EmployerCompany.Id,
+                        CompanyName = p.EmployerCompany.CompanyName,
+                        CompanyDescription = p.EmployerCompany.CompanyDescription,
+                        CompanyImage = p.EmployerCompany.CompanyImage
+                    },
                     PlacementImage = p.PlacementImage,
                     Description = p.Description,
                     Location = p.Location,
