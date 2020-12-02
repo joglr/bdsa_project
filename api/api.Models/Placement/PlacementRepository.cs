@@ -31,12 +31,22 @@ namespace api.Models
                 (from c in placement.Capabilities
                  select c.Id).ToList();
 
+            List<int> student =
+                (from s in placement.Students
+                 select s.Id).ToList();
+
             return new PlacementReadDTO
             {
                 Id = placement.Id,
+                Title = placement.Title,
                 EmployerCompanyId = placement.EmployerCompany.Id,
                 PlacementImage = placement.PlacementImage,
-                Capability = capability
+                Description = placement.Description,
+                Location = placement.Location,
+                MinHours = placement.MinHours,
+                MaxHours = placement.MaxHours,
+                Capability = capability,
+                Students = student
             };
         }
 
@@ -47,11 +57,19 @@ namespace api.Models
                 select new PlacementReadDTO
                 {
                     Id = p.Id,
+                    Title = p.Title,
                     EmployerCompanyId = p.EmployerCompany.Id,
                     PlacementImage = p.PlacementImage,
+                    Description = p.Description,
+                    Location = p.Location,
+                    MinHours = p.MinHours,
+                    MaxHours = p.MaxHours,
                     Capability =
                         (from c in p.Capabilities
-                         select c.Id).ToList()
+                         select c.Id).ToList(),
+                    Students =
+                        (from s in p.Students
+                         select s.Id).ToList()
                 };
             return await placementQuery.ToListAsync();
         }
@@ -68,8 +86,13 @@ namespace api.Models
 
             var entity = new Placement
             {
+                Title = placement.Title,
                 EmployerCompany = employer.Result,
-                PlacementImage = placement.PlacementImage
+                PlacementImage = placement.PlacementImage,
+                Description = placement.Description,
+                Location = placement.Location,
+                MinHours = placement.MinHours,
+                MaxHours = placement.MaxHours
             };
 
             await context.Placements.AddAsync(entity);
@@ -104,7 +127,12 @@ namespace api.Models
                 return -1;
             }
 
+            entity.Title = placement.Title;
             entity.PlacementImage = placement.PlacementImage;
+            entity.Description = placement.Description;
+            entity.Location = placement.Location;
+            entity.MinHours = placement.MinHours;
+            entity.MaxHours = placement.MaxHours;
             entity.Capabilities = MapCapabilities(placement.Capabilities).Result;
 
             await context.SaveChangesAsync();
