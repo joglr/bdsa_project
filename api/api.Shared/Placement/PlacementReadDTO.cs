@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 
 namespace api.Shared
 {
@@ -6,5 +7,6 @@ namespace api.Shared
         public int Id { get; set; }
         public int EmployerCompanyId { get; set; }
         public string PlacementImage { get; set; }
+        public List<int> Capability { get; set; }
     }
 }

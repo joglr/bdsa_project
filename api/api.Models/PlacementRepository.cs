@@ -27,11 +27,16 @@ namespace api.Models
 
             if (placement == null) return null;
 
+            List<int> capability =
+                (from c in placement.Capabilities
+                 select c.Id).ToList();
+
             return new PlacementReadDTO
             {
                 Id = placement.Id,
                 EmployerCompanyId = placement.EmployerCompany.Id,
-                PlacementImage = placement.PlacementImage
+                PlacementImage = placement.PlacementImage,
+                Capability = capability
             };
         }
 
@@ -43,7 +48,10 @@ namespace api.Models
                 {
                     Id = p.Id,
                     EmployerCompanyId = p.EmployerCompany.Id,
-                    PlacementImage = p.PlacementImage
+                    PlacementImage = p.PlacementImage,
+                    Capability =
+                        (from c in p.Capabilities
+                         select c.Id).ToList()
                 };
             return await placementQuery.ToListAsync();
         }
