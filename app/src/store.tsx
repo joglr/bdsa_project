@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useReducer, Dispatch } from "react";
 
-export type State =
-  | { status: Status.IDLE }
-  | { status: Status.PENDING }
-  | { status: Status.SUCCESS; response: any }
-  | { status: Status.FAILURE; error: string };
+export type STATE =
+  | { status: STATUS.IDLE }
+  | { status: STATUS.PENDING }
+  | { status: STATUS.SUCCESS; response: any }
+  | { status: STATUS.FAILURE; error: string };
 
-export enum Status {
+export enum STATUS {
   IDLE = "IDLE",
   SUCCESS = "SUCCESS",
   PENDING = "PENDING",
@@ -28,20 +28,22 @@ type Action =
   | { type: ACTION_TYPE.SUCCEED; response: any }
   | { type: ACTION_TYPE.FAIL; error: string };
 
-const StoreContext = createContext<[State, Dispatch<Action>]>([
+const StoreContext = createContext<[STATE, Dispatch<Action>]>([
   getDefaultState(),
-  (action : Action) => {
-    throw new Error('No context provider, did you forget to wrap your tree in <StoreProvider /> ?');
-  }
+  (_action: Action) => {
+    throw new Error(
+      "No context provider, did you forget to wrap your tree in <StoreProvider /> ?"
+    );
+  },
 ]);
 
-export function StoreProvider({ children } : any) {
-  const [state, dispatch] = useReducer<Reducer<State, Action>>(
+export function StoreProvider({ children }: any) {
+  const [state, dispatch] = useReducer<Reducer<STATE, Action>>(
     reducer,
     getDefaultState()
   );
 
-  const contextValue : [State, Dispatch<Action>] = [state, dispatch];
+  const contextValue: [STATE, Dispatch<Action>] = [state, dispatch];
 
   return (
     <StoreContext.Provider value={contextValue}>
@@ -50,23 +52,23 @@ export function StoreProvider({ children } : any) {
   );
 }
 
-function getDefaultState(): State {
+function getDefaultState(): STATE {
   return {
-    status: Status.IDLE,
+    status: STATUS.IDLE,
   };
 }
 
-function reducer(prevState: State | null, action: Action | null): State {
+function reducer(prevState: STATE | null, action: Action | null): STATE {
   if (prevState === null || action === null) return getDefaultState();
   switch (action.type) {
     case ACTION_TYPE.SUBMIT:
-      return { status: Status.PENDING };
+      return { status: STATUS.PENDING };
     case ACTION_TYPE.CANCEL:
-      return { status: Status.IDLE };
+      return { status: STATUS.IDLE };
     case ACTION_TYPE.SUCCEED:
-      return { status: Status.SUCCESS, response: action.response };
+      return { status: STATUS.SUCCESS, response: action.response };
     case ACTION_TYPE.FAIL:
-      return { status: Status.FAILURE, error: action.error };
+      return { status: STATUS.FAILURE, error: action.error };
     default:
       throw new Error("Unknown action type: " + action);
   }
