@@ -81,9 +81,9 @@ namespace api.Api
       using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
       {
         var context = serviceScope.ServiceProvider.GetRequiredService<PlaDatContext>();
-        context.GenerateData();
 
         context.Database.EnsureCreated();
+        context.GenerateData();
       }
 
       if (env.IsDevelopment())
