@@ -1,3 +1,4 @@
+import { Capability } from "./Capability";
 import { Employer } from "./Employer";
 
 export interface Placement {
@@ -9,6 +10,6 @@ export interface Placement {
   location: string;
   minHours: number;
   maxHours: number | null;
-  capabilities: number[];
+  capabilities: Capability[];
   students: number[];
 }

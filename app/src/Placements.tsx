@@ -7,10 +7,24 @@ import {
   Grid as Flex,
   Grow,
   useTheme,
+  Chip,
+  Typography,
 } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
 import React from "react";
+import styled from "styled-components";
 import { usePlacements } from "./api";
+
+const Chips = styled.div`
+padding: 0px ${(props) => props.theme.spacing(1.7)}px;
+.chip {
+    margin: 0px ${(props) => props.theme.spacing(1)}px ${(props) => props.theme.spacing(1)}px 0px;
+  }
+`
+
+const StyledParagraph = styled.p`
+  
+`
 
 export default function Placements(props: RouteComponentProps) {
   const placements = usePlacements();
@@ -57,7 +71,16 @@ export default function Placements(props: RouteComponentProps) {
                   </span>
                 }
               />
-              <CardContent>{description}</CardContent>
+              <Chips theme={theme}>
+                {capabilities.map((x, key) => {
+                  return <Chip className="chip" key={key} label={x.name} />
+                })}               
+              </Chips>
+              <CardContent>
+                <StyledParagraph>
+                  {description}
+                </StyledParagraph>
+              </CardContent>
               <CardActionArea>{/* <Car</Card> */}</CardActionArea>
             </Card>
           </Flex>
