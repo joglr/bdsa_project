@@ -10,5 +10,6 @@ namespace api.Shared
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public List<int> Capablities { get; set; }
+        public List<int> Placements { get; set; }
     }
 }

@@ -21,25 +21,21 @@ namespace api.Models
             var studentQuery =
                 from s in context.Students
                 where s.Id == id
-                select s;
-
-            var student = await studentQuery.FirstOrDefaultAsync();
-
-            if (student == null) return null;
-
-            List<int> capablities =
-                (from c in student.Capabilities
-                 select c.Id).ToList();
-
-            return new StudentReadDTO
-            {
-                Id = student.Id,
-                FirstName = student.FirstName,
-                LastName = student.LastName,
-                Email = student.Email,
-                PhoneNumber = student.PhoneNumber,
-                Capablities = capablities
-            };
+                select new StudentReadDTO
+                {
+                    Id = s.Id,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    Email = s.Email,
+                    PhoneNumber = s.PhoneNumber,
+                    Capablities =
+                        (from c in s.Capabilities
+                         select c.Id).ToList(),
+                    Placements =
+                        (from p in s.Placements
+                         select p.Id).ToList()
+                };
+            return await studentQuery.FirstOrDefaultAsync();
         }
 
         public async Task<List<StudentReadDTO>> ReadAllAsync()
@@ -55,7 +51,10 @@ namespace api.Models
                     PhoneNumber = s.PhoneNumber,
                     Capablities =
                         (from c in s.Capabilities
-                         select c.Id).ToList()
+                         select c.Id).ToList(),
+                    Placements =
+                        (from p in s.Placements
+                         select p.Id).ToList()
                 };
             return await studentQuery.ToListAsync();
         }
@@ -100,6 +99,18 @@ namespace api.Models
             if (entity == null)
             {
                 return -1;
+            }
+
+            foreach (int placementId in student.Placements)
+            {
+                var placementQuery = from p in context.Placements where p.Id == placementId select p;
+                if (await placementQuery.AnyAsync())
+                {
+                    var placement = await placementQuery.FirstAsync();
+                    System.Console.WriteLine("company: " + placement.EmployerCompany);
+                    if (entity.Placements == null) entity.Placements = new List<Placement>();
+                    entity.Placements.Add(placement);
+                }
             }
 
             entity.FirstName = student.FirstName;
