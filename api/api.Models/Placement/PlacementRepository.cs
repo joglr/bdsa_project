@@ -37,16 +37,31 @@ namespace api.Models
                     Location = p.Location,
                     MinHours = p.MinHours,
                     MaxHours = p.MaxHours,
-                    Capabilities = (from c in p.Capabilities
-                                    select new CapabilityReadDTO
-                                    {
-                                        Id = c.Id,
-                                        Name = c.Name,
-                                        Description = c.Description
-                                    }).ToList(),
+                    Capabilities =
+                        (from c in p.Capabilities
+                         select new CapabilityReadDTO
+                         {
+                             Id = c.Id,
+                             Name = c.Name,
+                             Description = c.Description
+                         }).ToList(),
                     Students =
                         (from s in p.Students
-                         select s.Id).ToList()
+                         select new StudentReadDTO
+                         {
+                             FirstName = s.FirstName,
+                             LastName = s.LastName,
+                             Email = s.Email,
+                             PhoneNumber = s.PhoneNumber,
+                             Capablities =
+                                (from c in s.Capabilities
+                                 select new CapabilityReadDTO
+                                 {
+                                     Id = c.Id,
+                                     Name = c.Name,
+                                     Description = c.Description
+                                 }).ToList()
+                         }).ToList()
                 };
 
             return await placementQuery.FirstOrDefaultAsync();
@@ -81,7 +96,21 @@ namespace api.Models
                                     }).ToList(),
                     Students =
                         (from s in p.Students
-                         select s.Id).ToList()
+                         select new StudentReadDTO
+                         {
+                             FirstName = s.FirstName,
+                             LastName = s.LastName,
+                             Email = s.Email,
+                             PhoneNumber = s.PhoneNumber,
+                             Capablities =
+                                (from c in s.Capabilities
+                                 select new CapabilityReadDTO
+                                 {
+                                     Id = c.Id,
+                                     Name = c.Name,
+                                     Description = c.Description
+                                 }).ToList()
+                         }).ToList()
                 };
             return await placementQuery.ToListAsync();
         }

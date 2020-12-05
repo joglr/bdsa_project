@@ -9,7 +9,7 @@ namespace api.Shared
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public List<int> Capablities { get; set; }
-        public List<int> Placements { get; set; }
+        public List<CapabilityReadDTO> Capablities { get; set; }
+        public List<PlacementReadDTO> Placements { get; set; }
     }
 }

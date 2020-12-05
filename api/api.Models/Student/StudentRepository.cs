@@ -30,10 +30,39 @@ namespace api.Models
                     PhoneNumber = s.PhoneNumber,
                     Capablities =
                         (from c in s.Capabilities
-                         select c.Id).ToList(),
+                         select new CapabilityReadDTO
+                         {
+                             Id = c.Id,
+                             Name = c.Name,
+                             Description = c.Description
+                         }).ToList(),
                     Placements =
                         (from p in s.Placements
-                         select p.Id).ToList()
+                         select new PlacementReadDTO
+                         {
+                             Id = p.Id,
+                             Title = p.Title,
+                             Description = p.Description,
+                             Location = p.Location,
+                             MinHours = p.MinHours,
+                             MaxHours = p.MaxHours,
+                             PlacementImage = p.PlacementImage,
+                             Employer = new EmployerReadDTO
+                             {
+                                 Id = p.EmployerCompany.Id,
+                                 CompanyName = p.EmployerCompany.CompanyName,
+                                 CompanyDescription = p.EmployerCompany.CompanyDescription,
+                                 CompanyImage = p.EmployerCompany.CompanyImage
+                             },
+                             Capabilities =
+                                (from c in s.Capabilities
+                                 select new CapabilityReadDTO
+                                 {
+                                     Id = c.Id,
+                                     Name = c.Name,
+                                     Description = c.Description
+                                 }).ToList()
+                         }).ToList()
                 };
             return await studentQuery.FirstOrDefaultAsync();
         }
@@ -51,10 +80,39 @@ namespace api.Models
                     PhoneNumber = s.PhoneNumber,
                     Capablities =
                         (from c in s.Capabilities
-                         select c.Id).ToList(),
+                         select new CapabilityReadDTO
+                         {
+                             Id = c.Id,
+                             Name = c.Name,
+                             Description = c.Description
+                         }).ToList(),
                     Placements =
                         (from p in s.Placements
-                         select p.Id).ToList()
+                         select new PlacementReadDTO
+                         {
+                             Id = p.Id,
+                             Title = p.Title,
+                             Description = p.Description,
+                             Location = p.Location,
+                             MinHours = p.MinHours,
+                             MaxHours = p.MaxHours,
+                             PlacementImage = p.PlacementImage,
+                             Employer = new EmployerReadDTO
+                             {
+                                 Id = p.EmployerCompany.Id,
+                                 CompanyName = p.EmployerCompany.CompanyName,
+                                 CompanyDescription = p.EmployerCompany.CompanyDescription,
+                                 CompanyImage = p.EmployerCompany.CompanyImage
+                             },
+                             Capabilities =
+                                (from c in p.Capabilities
+                                 select new CapabilityReadDTO
+                                 {
+                                     Id = c.Id,
+                                     Name = c.Name,
+                                     Description = c.Description
+                                 }).ToList()
+                         }).ToList()
                 };
             return await studentQuery.ToListAsync();
         }
