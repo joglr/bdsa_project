@@ -1,10 +1,15 @@
 import React, { createContext, useContext, useReducer, Dispatch } from "react";
+import { Employer } from "./entities/Employer";
+import { Student } from "./entities/Student";
 
-export type STATE =
+export type STATE = {
+  user: Student | Employer | null;
+} & (
   | { status: STATUS.IDLE }
   | { status: STATUS.PENDING }
   | { status: STATUS.SUCCESS; response: any }
-  | { status: STATUS.FAILURE; error: string };
+  | { status: STATUS.FAILURE; error: string }
+);
 
 export enum STATUS {
   IDLE = "IDLE",
@@ -15,14 +20,24 @@ export enum STATUS {
 
 export enum ACTION_TYPE {
   SUBMIT = "SUBMIT",
+  CHANGE_USER = "CHANGE_USER",
+  CHANGE_USER_TYPE = "CHANGE_USER_TYPE",
   CANCEL = "CANCEL",
   SUCCEED = "SUCCEED",
   FAIL = "FAIL",
 }
 
+function getDefaultState(): STATE {
+  return {
+    status: STATUS.IDLE,
+    user: null,
+  };
+}
+
 type Reducer<S, A> = (prevState: S, action: A) => S;
 
 type Action =
+  | { type: ACTION_TYPE.CHANGE_USER; user: Student | Employer | null }
   | { type: ACTION_TYPE.SUBMIT; value: string }
   | { type: ACTION_TYPE.CANCEL }
   | { type: ACTION_TYPE.SUCCEED; response: any }
@@ -52,25 +67,25 @@ export function StoreProvider({ children }: any) {
   );
 }
 
-function getDefaultState(): STATE {
-  return {
-    status: STATUS.IDLE,
-  };
-}
-
 function reducer(prevState: STATE | null, action: Action | null): STATE {
   if (prevState === null || action === null) return getDefaultState();
   switch (action.type) {
+    case ACTION_TYPE.CHANGE_USER:
+      return { ...prevState, user: action.user };
     case ACTION_TYPE.SUBMIT:
-      return { status: STATUS.PENDING };
+      return { ...prevState, status: STATUS.PENDING };
     case ACTION_TYPE.CANCEL:
-      return { status: STATUS.IDLE };
+      return { ...prevState, status: STATUS.IDLE };
     case ACTION_TYPE.SUCCEED:
-      return { status: STATUS.SUCCESS, response: action.response };
+      return {
+        ...prevState,
+        status: STATUS.SUCCESS,
+        response: action.response,
+      };
     case ACTION_TYPE.FAIL:
-      return { status: STATUS.FAILURE, error: action.error };
+      return { ...prevState, status: STATUS.FAILURE, error: action.error };
     default:
-      throw new Error("Unknown action type: " + action);
+      throw new Error("Unknown action type: " + JSON.stringify(action));
   }
 }
 

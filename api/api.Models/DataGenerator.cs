@@ -32,11 +32,13 @@ namespace api.Models
       context.Employers.AddRange(spotify, fitnessWorld, WotC, starBucks, hogwards);
 
       // Students
-      var s1 = new Student { FirstName = "Shrek", LastName = "the Ogre", Capabilities = new List<Capability> { c3, c5 } };
-      var s2 = new Student { FirstName = "Harry", LastName = "Potter", Capabilities = new List<Capability> { c8, c1 } };
-      var s3 = new Student { FirstName = "Darth", LastName = "Vader", Capabilities = new List<Capability> { c8, c6, c1 } };
-      var s4 = new Student { FirstName = "Tony", LastName = "Stark", Capabilities = new List<Capability> { c5, c6, c4 } };
-      var s5 = new Student { FirstName = "Kaj", LastName = "popkorn", Capabilities = new List<Capability> { c2, c4, c7, c1 } };
+      var s1 = new Student { FirstName = "Shrek", LastName = "the Ogre", PhoneNumber = "1234", Email = "shrek@hotmail.com", Capabilities = new List<Capability> { c3, c5 } };
+      var s2 = new Student { FirstName = "Harry", LastName = "Potter", PhoneNumber = "1234", Email = "harry@hotmail.com", Capabilities = new List<Capability> { c8, c1 } };
+      var s3 = new Student { FirstName = "Darth", LastName = "Vader", PhoneNumber = "1234", Email = "darth@hotmail.com", Capabilities = new List<Capability> { c8, c6, c1 } };
+      var s4 = new Student { FirstName = "Tony", LastName = "Stark", PhoneNumber = "1234", Email = "tony@hotmail.com", Capabilities = new List<Capability> { c5, c6, c4 } };
+      var s5 = new Student { FirstName = "Kaj", LastName = "popkorn", PhoneNumber = "1234", Email = "kaj@hotmail.com", Capabilities = new List<Capability> { c2, c4, c7, c1 } };
+
+      context.Students.AddRange(s1, s2, s3, s4, s5);
 
       // Placements
       var p1 = new Placement

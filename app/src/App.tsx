@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { useTheme } from "@material-ui/core";
+import { Grow, useTheme } from "@material-ui/core";
 import { Router } from "@reach/router";
 import Employers from "./Employers";
 import Students from "./Students";
@@ -9,6 +9,8 @@ import Capabilities from "./Capatabilities";
 import Navigation from "./Navigation";
 
 import styled from "styled-components";
+import Landing from "./Landing";
+import { useStore } from "./store";
 
 const Root = styled.div`
   height: 100vh;
@@ -21,19 +23,22 @@ const Main = styled.main`
 `;
 
 function App() {
-  // const [state] = useStore();
+  const [{ user }] = useStore();
   const theme = useTheme();
   return (
     <Root theme={theme}>
       <Main>
         <Router>
-          <Placements default path="/placements" />
-          <Students path="/students" />
-          <Employers path="/employers" />
-          <Capabilities path="/capabilities" />
+          {user !== null ? (
+            <Placements default path="/" />
+          ) : (
+            <Landing default path="/" />
+          )}
         </Router>
       </Main>
-      <Navigation />
+      <Grow in={user !== null} mountOnEnter unmountOnExit>
+        <Navigation />
+      </Grow>
     </Root>
   );
 }

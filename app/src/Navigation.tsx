@@ -10,11 +10,13 @@ import WorkIcon from "@material-ui/icons/Work";
 import BusinessIcon from "@material-ui/icons/Business";
 import PeopleIcon from "@material-ui/icons/People";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
+import { ContentX } from "./components/util";
 
 const routes = [
-  { title: "Placements", route: "/placements", icon: <WorkIcon /> },
-  { title: "Students", route: "/students", icon: <PeopleIcon /> },
-  { title: "Employers", route: "/employers", icon: <BusinessIcon /> },
+  { title: "Browse", route: "/placements", icon: <WorkIcon /> },
+  { title: "My", route: "/placements", icon: <WorkIcon /> },
+  // { title: "Students", route: "/students", icon: <PeopleIcon /> },
+  // { title: "Employers", route: "/employers", icon: <BusinessIcon /> },
   {
     title: "Capabilities",
     route: "/capabilities",
@@ -33,7 +35,7 @@ export default function Navigation() {
         bottom: 0,
       }}
     >
-      <div>
+      <ContentX style={{ gridTemplateColumns: "1fr" }}>
         {routes.map(({ title, route, icon }, i) => (
           <BottomNavigationAction
             showLabel
@@ -44,7 +46,7 @@ export default function Navigation() {
             icon={icon}
           />
         ))}
-      </div>
+      </ContentX>
     </BottomNavigation>
   );
 }
