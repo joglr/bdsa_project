@@ -45,7 +45,46 @@ namespace api.Models
                     Id = e.Id,
                     CompanyName = e.CompanyName,
                     CompanyDescription = e.CompanyDescription,
-                    CompanyImage = e.CompanyImage
+                    CompanyImage = e.CompanyImage,
+                    Placements =
+                        (from p in context.Placements
+                         where p.EmployerCompany.Id == e.Id
+                         select new PlacementReadDTO
+                         {
+                             Id = p.Id,
+                             Title = p.Description,
+                             PlacementImage = p.PlacementImage,
+                             Description = p.Description,
+                             Location = p.Location,
+                             MinHours = p.MinHours,
+                             MaxHours = p.MaxHours,
+                             Capabilities =
+                                 (from c in p.Capabilities
+                                  select new CapabilityReadDTO
+                                  {
+                                      Id = c.Id,
+                                      Name = c.Name,
+                                      Description = c.Description
+                                  }).ToList(),
+                             Students =
+                                 (from s in p.Students
+                                  select new StudentReadDTO
+                                  {
+                                      Id = s.Id,
+                                      FirstName = s.FirstName,
+                                      LastName = s.LastName,
+                                      Email = s.Email,
+                                      PhoneNumber = s.PhoneNumber,
+                                      Capablities =
+                                         (from c in s.Capabilities
+                                          select new CapabilityReadDTO
+                                          {
+                                              Id = c.Id,
+                                              Name = c.Name,
+                                              Description = c.Description
+                                          }).ToList()
+                                  }).ToList()
+                         }).ToList()
                 };
             return await employerQuery.ToListAsync();
         }

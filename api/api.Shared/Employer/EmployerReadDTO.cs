@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 
 namespace api.Shared
 {
@@ -7,5 +8,6 @@ namespace api.Shared
         public string CompanyName { get; set; }
         public string CompanyDescription { get; set; }
         public string CompanyImage { get; set; }
+        public List<PlacementReadDTO> Placements { get; set; }
     }
 }
