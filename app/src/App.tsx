@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Grow, useTheme } from "@material-ui/core";
+import { AppBar, Grow, Toolbar, Typography, useTheme } from "@material-ui/core";
 import { Router } from "@reach/router";
 import Placements from "./Placements";
 import Navigation from "./Navigation";
@@ -10,6 +10,9 @@ import Landing from "./Landing";
 import { USER_TYPE, useStore } from "./store";
 import Settings from "./Settings";
 import { usePlacements } from "./api";
+import { ContentX } from "./components/util";
+import { Employer } from "./entities/Employer";
+import { Student } from "./entities/Student";
 
 const Root = styled.div`
   height: 100vh;
@@ -41,6 +44,20 @@ function App() {
         <>
           <Root theme={theme}>
             <Main>
+              <AppBar position="relative">
+                <ContentX>
+                  <Toolbar>
+                    <Typography variant="h6">
+                      Hello,{" "}
+                      {userType === USER_TYPE.EMPLOYER
+                        ? (user as Employer).companyName
+                        : `${(user as Student).firstName} ${
+                            (user as Student).lastName
+                          }`}
+                    </Typography>
+                  </Toolbar>
+                </ContentX>
+              </AppBar>
               <Router
                 style={{
                   height: "100%",
