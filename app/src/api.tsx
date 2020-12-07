@@ -12,22 +12,31 @@ function useAPI(path: any[], options: any = {}, deps: DependencyList = []) {
 
 export function useEmployers(): Employer[] {
   const result = useAPI(["employer"]);
-  return result !== null ? result.map<Employer>((e: Employer) => e) : [];
+  return result !== null ? result.map((e: Employer) => e) : [];
 }
 
 export function useStudents(): Student[] {
   const result = useAPI(["student"]);
-  return result !== null ? result.map<Student>((s: Student) => s) : [];
+  return result !== null ? result.map((s: Student) => s) : [];
 }
 
 export function usePlacements(): Placement[] {
   const result = useAPI(["placement"]);
-  return result !== null ? result.map<Placement>((p: Placement) => p) : [];
+  return result !== null ? result.map((p: Placement) => p) : [];
+}
+
+export function usePlacement(
+  placementID: number | null
+): (Placement & { students: Student[] }) | null {
+  const result = useAPI(["placement", placementID]);
+  return result !== null
+    ? (result as Placement & { students: Student[] })
+    : null;
 }
 
 export function useCapabilities(): Capability[] {
   const result = useAPI(["capability"]);
-  return result !== null ? result.map<Capability>((c: Capability) => c) : [];
+  return result !== null ? result.map((c: Capability) => c) : [];
 }
 
 export async function apply(userID: number, placementID: number) {

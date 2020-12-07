@@ -13,6 +13,7 @@ import { usePlacements } from "./api";
 import { ContentX } from "./components/util";
 import { Employer } from "./entities/Employer";
 import { Student } from "./entities/Student";
+import Placement from "./Placement";
 
 const Root = styled.div`
   height: 100vh;
@@ -70,6 +71,7 @@ function App() {
                   browse
                   placements={placements}
                 />
+                <Placement path="/placements/:placementID" />
                 <Placements
                   default={userType === USER_TYPE.EMPLOYER}
                   path="/my-placements"

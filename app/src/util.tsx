@@ -6,7 +6,7 @@ export function useFetch(
   path: string,
   options: any,
   deps: React.DependencyList = []
-) {
+): any {
   const [result, setResult] = useState<Result>(null);
 
   useEffect(() => {

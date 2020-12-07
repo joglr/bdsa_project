@@ -9,7 +9,7 @@ import {
   Button,
   CardActions,
 } from "@material-ui/core";
-import { RouteComponentProps } from "@reach/router";
+import { Link, RouteComponentProps } from "@reach/router";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { apply } from "./api";
@@ -130,29 +130,8 @@ export default function Placements({
                     )}
                     {userType === USER_TYPE.EMPLOYER && (
                       <>
-                        <Button
-                          onClick={async () => {
-                            await apply(user.id, id);
-                            console.log("applied!");
-                          }}
-                        >
+                        <Button component={Link} to={`/placements/${id}`}>
                           View applicants
-                        </Button>
-                        <Button
-                          onClick={async () => {
-                            await apply(user.id, id);
-                            console.log("applied!");
-                          }}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          onClick={async () => {
-                            await apply(user.id, id);
-                            console.log("applied!");
-                          }}
-                        >
-                          Delete
                         </Button>
                       </>
                     )}

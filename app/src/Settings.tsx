@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button, useTheme } from "@material-ui/core";
 import { RouteComponentProps, useNavigate } from "@reach/router";
 import React from "react";
 import { Content } from "./components/util";
@@ -7,8 +7,13 @@ import { ACTION_TYPE, useStore } from "./store";
 export default function Settings(_: RouteComponentProps) {
   const [, dispatch] = useStore();
   const navigate = useNavigate();
+  const theme = useTheme();
   return (
-    <Content>
+    <Content
+      style={{
+        padding: theme.spacing(),
+      }}
+    >
       <Button
         onClick={async () => {
           await navigate("/");
