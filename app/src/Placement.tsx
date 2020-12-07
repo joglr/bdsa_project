@@ -12,7 +12,7 @@ export default function PlacementDetails(
   const placement = usePlacement(_.placementID ?? null);
   return (
     <Content>
-      <IconButton component={Link} to="/placements">
+      <IconButton component={Link} to="/my-placements">
         <BackIcon />
       </IconButton>
       <Typography variant="h6">{placement?.title}</Typography>
