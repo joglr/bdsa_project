@@ -49,7 +49,9 @@ export default function Placements({
   const theme = useTheme();
   const [skipped, setSkipped] = useState<number[]>([]);
   const filteredPlacements = placements.filter(
-    ({ id }) => !skipped.includes(id) || !browse
+    ({ id }) =>
+      (!skipped.includes(id) && !user?.placements.find((p) => p.id === id)) ||
+      !browse
   );
 
   return (
@@ -62,7 +64,6 @@ export default function Placements({
         ? filteredPlacements.map(
             ({
               id,
-              // employer: { companyName, companyDescription, companyImage },
               title,
               placementImage,
               description,
@@ -70,6 +71,7 @@ export default function Placements({
               maxHours,
               capabilities,
               location,
+              ...rest
             }) => (
               <Flex item key={id}>
                 <StyledCard theme={theme}>
@@ -77,13 +79,17 @@ export default function Placements({
                     style={{
                       paddingTop: "56.25%",
                     }}
-                    image={"http://placeimg.com/400/200?" + Math.random()}
+                    image={`http://placeimg.com/400/200/${placementImage}`}
                   />
                   <CardHeader
                     title={title}
                     subheader={
                       <>
-                        {/* <span>{companyName} · </span> */}
+                        {rest.employer !== null ? (
+                          <span>{rest.employer.companyName} · </span>
+                        ) : (
+                          (user as Employer).companyName
+                        )}
                         <span>
                           {minHours}-{maxHours} hours
                         </span>{" "}
