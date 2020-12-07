@@ -17,7 +17,7 @@ export function useEmployers(): Employer[] {
 }
 
 export function useEmployer(employerID: number | null): Student | null {
-  const result = useAPI(["employer", employerID]);
+  const result = useAPI(["employer", employerID], {}, [employerID]);
   return result !== null ? (result as Student) : null;
 }
 
@@ -27,7 +27,7 @@ export function useStudents(): Student[] {
 }
 
 export function useStudent(studentID: number | null): Student | null {
-  const result = useAPI(["student", studentID]);
+  const result = useAPI(["student", studentID], {}, [studentID]);
   return result !== null ? (result as Student) : null;
 }
 
@@ -68,7 +68,7 @@ export async function apply(
       ...student,
       capabilities: student.capabilities.map((c: Capability) => c.id),
       placements: [
-        ...student.placements.map((p: Placement) => p.id),
+        // ...student.placements.map((p: Placement) => p.id),
         placementID,
       ],
     }),
