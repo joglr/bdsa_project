@@ -1,18 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import App from "./App";
 import { StoreProvider } from "./store";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { blue } from "@material-ui/core/colors";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <StoreProvider>
+  <StoreProvider>
+    <ThemeProvider
+      theme={createMuiTheme({
+        palette: {
+          primary: blue,
+        },
+      })}
+    >
       <App />
-    </StoreProvider>
-  </React.StrictMode>,
+    </ThemeProvider>
+  </StoreProvider>,
   document.getElementById("root")
 );
 
@@ -31,4 +39,3 @@ serviceWorkerRegistration.unregister();
 reportWebVitals();
 
 // TODO: Add web vitals reporting
-

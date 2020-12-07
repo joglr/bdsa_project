@@ -25,3 +25,5 @@ yarn-error.log*
 # C#
 bin
 obj
+
+*.db

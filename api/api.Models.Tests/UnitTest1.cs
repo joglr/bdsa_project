@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Api.Tests
+namespace api.Models.Tests
 {
     public class UnitTest1
     {

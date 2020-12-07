@@ -1,89 +1,94 @@
 import React from "react";
 import "./App.css";
-import { Button, Grid, LinearProgress } from "@material-ui/core";
-import { ACTION_TYPE, Status, useStore } from "./store";
+import { AppBar, Grow, Toolbar, Typography, useTheme } from "@material-ui/core";
+import { Router } from "@reach/router";
+import Placements from "./Placements";
+import Navigation from "./Navigation";
+
+import styled from "styled-components";
+import Landing from "./Landing";
+import { USER_TYPE, useStore } from "./store";
+import Settings from "./Settings";
+import { usePlacements } from "./api";
+import { ContentX } from "./components/util";
+import { Employer } from "./entities/Employer";
+import { Student } from "./entities/Student";
+import Placement from "./Placement";
+
+const Root = styled.div`
+  height: 100vh;
+  display: grid;
+  grid-template-rows: ${(props) => props.theme.spacing(7)}px 1fr ${(props) =>
+      props.theme.spacing(7)}px;
+`;
+
+const Main = styled.main`
+  overflow-y: auto;
+`;
 
 function App() {
-  const [state] = useStore();
+  const [{ user, userType }] = useStore();
+  const theme = useTheme();
+  const placements = usePlacements();
   return (
-    <Grid
-      style={{
-        height: "100vh",
-      }}
-      container
-      direction="column"
-      justify="space-evenly"
-      alignItems="center"
-      alignContent="center"
-    >
-      <SubmitButton />
-      <span>State: {state.status}</span>
-      <br />
-      {state.status === Status.PENDING ? (
-        <LinearProgress
+    <>
+      {user === null ? (
+        <div
           style={{
-            width: 100,
+            height: "100vh",
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
           }}
-        />
-      ) : state.status === Status.SUCCESS ? (
-        "Result: " + JSON.stringify(state.response)
+        >
+          <Landing />
+        </div>
       ) : (
-        <div />
+        <>
+          <Root theme={theme}>
+            <AppBar position="relative">
+              <ContentX>
+                <Toolbar>
+                  <Typography variant="h6">
+                    Hello,{" "}
+                    {userType === USER_TYPE.EMPLOYER
+                      ? (user as Employer).companyName
+                      : `${(user as Student).firstName} ${
+                          (user as Student).lastName
+                        }`}
+                  </Typography>
+                </Toolbar>
+              </ContentX>
+            </AppBar>
+            <Main>
+              <Router
+                style={{
+                  height: "100%",
+                }}
+              >
+                <Placements
+                  default={userType === USER_TYPE.STUDENT}
+                  path="/placements"
+                  browse
+                  placements={placements}
+                />
+                <Placement path="/placements/:placementID" />
+                <Placements
+                  default={userType === USER_TYPE.EMPLOYER}
+                  path="/my-placements"
+                  browse={false}
+                  placements={user.placements}
+                />
+                <Settings path="/settings" />
+              </Router>
+            </Main>
+            <Grow in={user !== null} mountOnEnter unmountOnExit>
+              <Navigation />
+            </Grow>
+          </Root>
+        </>
       )}
-    </Grid>
+    </>
   );
-}
-
-interface SubmitButtonProps {}
-
-function SubmitButton(props: SubmitButtonProps) {
-  const [state, dispatch] = useStore();
-
-  async function submit() {
-    dispatch({
-      type: ACTION_TYPE.SUBMIT,
-      value: "hej",
-    });
-
-    await sleep(2000);
-    const response = await fetch("api.json");
-
-    if (response.ok && response.status >= 200 && response.status < 300) {
-      try {
-        dispatch({
-          type: ACTION_TYPE.SUCCEED,
-          response: await response.json(),
-        });
-      } catch (e) {
-        dispatch({
-          type: ACTION_TYPE.FAIL,
-          error: e.message,
-        });
-      }
-    } else {
-      dispatch({
-        type: ACTION_TYPE.FAIL,
-        error: response.statusText,
-      });
-    }
-  }
-
-  return (
-    <Grid item>
-      <Button
-        onClick={submit}
-        color="secondary"
-        disabled={state.status === Status.PENDING}
-        variant="text"
-      >
-        Submit
-      </Button>
-    </Grid>
-  );
-}
-
-function sleep(amount: number) {
-  return new Promise((resolve) => setTimeout(resolve, amount));
 }
 
 export default App;
