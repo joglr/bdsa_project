@@ -17,7 +17,6 @@ import { Content } from "./components/util";
 import { Capability } from "./entities/Capability";
 import { Employer } from "./entities/Employer";
 import { Placement } from "./entities/Placement";
-import { Student } from "./entities/Student";
 import { USER_TYPE, useStore } from "./store";
 
 const Chips = styled.div`

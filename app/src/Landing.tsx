@@ -1,25 +1,11 @@
 import React, { useState } from "react";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  Button,
-  Grow,
-  Typography,
-  useTheme,
-  createMuiTheme,
-  ThemeProvider,
-} from "@material-ui/core";
+import { Button, Grow, Typography, useTheme } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
 import { ContentY } from "./components/util";
 
 import { useEmployers, useStudents } from "./api";
 import { ACTION_TYPE, USER_TYPE, useStore } from "./store";
-import { Employer } from "./entities/Employer";
 import styled from "styled-components";
-import { Student } from "./entities/Student";
 import User from "./entities/User";
 
 const AbsoluteChildren = styled.div``;
