@@ -118,30 +118,6 @@ namespace api.Models
             return await studentQuery.ToListAsync();
         }
 
-        /*public async Task<PlacementReadDTO> ReadRandomPlacement(int id)
-        {
-            var placementQuery =
-              (from p in context.Placements
-               select p).ToList();
-
-            var studentPlacementQuery =
-              (from s in context.Students
-               where s.Id == id
-               select s.Placements).ToList();
-
-            var studentPlacements = studentPlacementQuery.FirstOrDefault();
-
-            var nonappliedPlacements = placementQuery.Except(studentPlacements);
-
-            Random rand = new Random();
-            var selectedPlacement = nonappliedPlacements.ElementAt(rand.Next(nonappliedPlacements.Count()));
-
-            return new PlacementReadDTO
-            {
-              Id = selectedPlacement.Id
-            }
-        }*/
-
         public async Task<int> CreateAsync(StudentCreateDTO student)
         {
             var entity = new Student
