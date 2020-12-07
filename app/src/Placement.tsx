@@ -6,7 +6,7 @@ import { Content } from "./components/util";
 import { Student } from "./entities/Student";
 import BackIcon from "@material-ui/icons/ArrowBack";
 
-export default function Placement(
+export default function PlacementDetails(
   _: RouteComponentProps & { placementID?: number }
 ) {
   const placement = usePlacement(_.placementID ?? null);

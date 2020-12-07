@@ -89,6 +89,7 @@ export default function Landing(_: RouteComponentProps) {
             >
               {users.map((user: User) => (
                 <Button
+                  key={user.id}
                   variant="outlined"
                   color="inherit"
                   style={{

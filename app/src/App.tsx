@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from "react";
 import "./App.css";
 import { AppBar, Grow, Toolbar, Typography, useTheme } from "@material-ui/core";
@@ -9,11 +10,11 @@ import styled from "styled-components";
 import Landing from "./Landing";
 import { USER_TYPE, useStore } from "./store";
 import Settings from "./Settings";
-import { usePlacements } from "./api";
+import { useEmployer, usePlacements, useStudent } from "./api";
 import { ContentX } from "./components/util";
 import { Employer } from "./entities/Employer";
 import { Student } from "./entities/Student";
-import Placement from "./Placement";
+import PlacementDetails from "./Placement";
 
 const Root = styled.div`
   height: 100vh;
@@ -30,6 +31,10 @@ function App() {
   const [{ user, userType }] = useStore();
   const theme = useTheme();
   const placements = usePlacements();
+
+  const studentPlacements = useStudent(user?.id ?? null)?.placements ?? [];
+  const employerPlacements = useEmployer(user?.id ?? null)?.placements ?? [];
+
   return (
     <>
       {user === null ? (
@@ -71,12 +76,20 @@ function App() {
                   browse
                   placements={placements}
                 />
-                <Placement path="/placements/:placementID" />
+
+                <PlacementDetails path="/placements/:placementID" />
                 <Placements
                   default={userType === USER_TYPE.EMPLOYER}
                   path="/my-placements"
                   browse={false}
-                  placements={user.placements}
+
+                  placements={
+                    userType === USER_TYPE.EMPLOYER
+                      ? employerPlacements
+                      : userType === USER_TYPE.STUDENT
+                      ? studentPlacements
+                      : []
+                  }
                 />
                 <Settings path="/settings" />
               </Router>

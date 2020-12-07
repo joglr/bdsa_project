@@ -4,6 +4,8 @@ import { Capability } from "./entities/Capability";
 import { Employer } from "./entities/Employer";
 import { Placement } from "./entities/Placement";
 import { Student } from "./entities/Student";
+import { ACTION_TYPE, USER_TYPE } from "./store";
+
 import { useFetch } from "./util";
 
 function useAPI(path: any[], options: any = {}, deps: DependencyList = []) {
@@ -15,9 +17,19 @@ export function useEmployers(): Employer[] {
   return result !== null ? result.map((e: Employer) => e) : [];
 }
 
+export function useEmployer(employerID: number | null): Student | null {
+  const result = useAPI(["employer", employerID], {}, [employerID]);
+  return result !== null ? (result as Student) : null;
+}
+
 export function useStudents(): Student[] {
   const result = useAPI(["student"]);
   return result !== null ? result.map((s: Student) => s) : [];
+}
+
+export function useStudent(studentID: number | null): Student | null {
+  const result = useAPI(["student", studentID], {}, [studentID]);
+  return result !== null ? (result as Student) : null;
 }
 
 export function usePlacements(): Placement[] {
@@ -39,11 +51,14 @@ export function useCapabilities(): Capability[] {
   return result !== null ? result.map((c: Capability) => c) : [];
 }
 
-export async function apply(userID: number, placementID: number) {
-  const student = await fetch(
+export async function apply(
+  userID: number,
+  placementID: number,
+  dispatch: any
+) {
+  const { id, ...student } = await fetch(
     [API_ROOT, "student", userID].join("/")
   ).then((r) => r.json());
-  // const { id, ...student } = students.find((s: Student) => s.id === userID);
 
   await fetch([API_ROOT, "student", userID].join("/"), {
     method: "put",
@@ -53,7 +68,18 @@ export async function apply(userID: number, placementID: number) {
     body: JSON.stringify({
       ...student,
       capabilities: student.capabilities.map((c: Capability) => c.id),
-      placements: [...student.placements, placementID],
+      placements: [
+        // ...student.placements.map((p: Placement) => p.id),
+        placementID,
+      ],
     }),
+  });
+
+  dispatch({
+    type: ACTION_TYPE.CHANGE_USER,
+    user: await fetch([API_ROOT, "student", userID].join("/")).then((r) =>
+      r.json()
+    ),
+    userType: USER_TYPE.STUDENT,
   });
 }
