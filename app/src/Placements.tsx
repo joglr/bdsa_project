@@ -44,7 +44,7 @@ export default function Placements({
   browse,
   placements,
 }: RouteComponentProps & { placements: Placement[]; browse: boolean }) {
-  const [{ user, userType }] = useStore();
+  const [{ user, userType }, dispatch] = useStore();
   const theme = useTheme();
   const [skipped, setSkipped] = useState<number[]>([]);
   const filteredPlacements = placements.filter(
@@ -109,8 +109,7 @@ export default function Placements({
                       <>
                         <Button
                           onClick={async () => {
-                            await apply(user.id, id);
-                            console.log("applied!");
+                            await apply(user.id, id, dispatch);
                           }}
                         >
                           Apply
