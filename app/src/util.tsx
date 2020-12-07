@@ -5,7 +5,7 @@ type Result = [] | null;
 export function useFetch(
   path: string,
   options: any,
-  deps: React.DependencyList = []
+  deps?: React.DependencyList
 ): any {
   const [result, setResult] = useState<Result>(null);
 

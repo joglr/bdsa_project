@@ -8,7 +8,7 @@ import { ACTION_TYPE, USER_TYPE } from "./store";
 
 import { useFetch } from "./util";
 
-function useAPI(path: any[], options: any = {}, deps: DependencyList = []) {
+function useAPI(path: any[], options: any = {}, deps?: DependencyList) {
   return useFetch([API_ROOT, ...path].join("/"), options, deps);
 }
 
@@ -18,7 +18,7 @@ export function useEmployers(): Employer[] {
 }
 
 export function useEmployer(employerID: number | null): Student | null {
-  const result = useAPI(["employer", employerID], {}, [employerID]);
+  const result = useAPI(["employer", employerID], {});
   return result !== null ? (result as Student) : null;
 }
 
@@ -28,7 +28,7 @@ export function useStudents(): Student[] {
 }
 
 export function useStudent(studentID: number | null): Student | null {
-  const result = useAPI(["student", studentID], {}, [studentID]);
+  const result = useAPI(["student", studentID], {});
   return result !== null ? (result as Student) : null;
 }
 
@@ -68,10 +68,7 @@ export async function apply(
     body: JSON.stringify({
       ...student,
       capabilities: student.capabilities.map((c: Capability) => c.id),
-      placements: [
-        // ...student.placements.map((p: Placement) => p.id),
-        placementID,
-      ],
+      placements: [placementID],
     }),
   });
 
