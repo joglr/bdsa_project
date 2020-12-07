@@ -10,12 +10,15 @@ import {
   CardActions,
 } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { apply } from "./api";
 import { Content } from "./components/util";
 import { Capability } from "./entities/Capability";
-import { useStore } from "./store";
+import { Employer } from "./entities/Employer";
+import { Placement } from "./entities/Placement";
+import { Student } from "./entities/Student";
+import { USER_TYPE, useStore } from "./store";
 
 const Chips = styled.div`
   padding: 0px ${(props) => props.theme.spacing(1.7)}px;
@@ -38,9 +41,16 @@ const StyledCard = styled(Card)`
   margin-bottom: ${(p) => p.theme.spacing(2)}px;
 `;
 
-export default function Placements(_: RouteComponentProps) {
-  const [{ user }] = useStore();
+export default function Placements({
+  browse,
+  placements,
+}: RouteComponentProps & { placements: Placement[]; browse: boolean }) {
+  const [{ user, userType }] = useStore();
   const theme = useTheme();
+  const [skipped, setSkipped] = useState<number[]>([]);
+  const filteredPlacements = placements.filter(
+    ({ id }) => !skipped.includes(id) || !browse
+  );
 
   return (
     <Content
@@ -48,72 +58,108 @@ export default function Placements(_: RouteComponentProps) {
         padding: theme.spacing(2),
       }}
     >
-      {user ? (
-        user.placements.map(
-          ({
-            id,
-            // employer: { companyName, companyDescription, companyImage },
-            title,
-            placementImage,
-            description,
-            minHours,
-            maxHours,
-            capabilities,
-            location,
-          }) => (
-            <Flex item key={id}>
-              <StyledCard theme={theme}>
-                <CardMedia
-                  style={{
-                    paddingTop: "56.25%",
-                  }}
-                  image={"http://placeimg.com/400/200?" + Math.random()}
-                />
-                <CardHeader
-                  title={title}
-                  subheader={
-                    <>
-                      {/* <span>{companyName} · </span> */}
-                      <span>
-                        {minHours}-{maxHours} hours
-                      </span>{" "}
-                      <span>· {location}</span>
-                    </>
-                  }
-                />
-                <Chips theme={theme}>
-                  {capabilities.map((x: Capability, key) => {
-                    return <Chip key={key} label={x.name} />;
-                  })}
-                </Chips>
-                <CardContent>
-                  <StyledParagraph>{description}</StyledParagraph>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    onClick={async () => {
-                      await apply(user.id, id);
-                      console.log("applied!");
+      {user && filteredPlacements.length > 0
+        ? filteredPlacements.map(
+            ({
+              id,
+              // employer: { companyName, companyDescription, companyImage },
+              title,
+              placementImage,
+              description,
+              minHours,
+              maxHours,
+              capabilities,
+              location,
+            }) => (
+              <Flex item key={id}>
+                <StyledCard theme={theme}>
+                  <CardMedia
+                    style={{
+                      paddingTop: "56.25%",
                     }}
-                  >
-                    Apply
-                  </Button>
-                  <Button
-                    onClick={async () => {
-                      await apply(user.id, id);
-                      console.log("applied!");
-                    }}
-                  >
-                    Reject
-                  </Button>
-                </CardActions>
-              </StyledCard>
-            </Flex>
+                    image={"http://placeimg.com/400/200?" + Math.random()}
+                  />
+                  <CardHeader
+                    title={title}
+                    subheader={
+                      <>
+                        {/* <span>{companyName} · </span> */}
+                        <span>
+                          {minHours}-{maxHours} hours
+                        </span>{" "}
+                        <span>· {location}</span>
+                      </>
+                    }
+                  />
+                  <Chips theme={theme}>
+                    {capabilities.map((x: Capability, key) => {
+                      return <Chip key={key} label={x.name} />;
+                    })}
+                  </Chips>
+                  <CardContent>
+                    <StyledParagraph>{description}</StyledParagraph>
+                  </CardContent>
+                  <CardActions>
+                    {userType === USER_TYPE.STUDENT && browse && (
+                      <>
+                        <Button
+                          onClick={async () => {
+                            await apply(user.id, id);
+                            console.log("applied!");
+                          }}
+                        >
+                          Apply
+                        </Button>
+                        <Button
+                          onClick={() =>
+                            setSkipped((prevSkipped: number[]) => [
+                              ...prevSkipped,
+                              id,
+                            ])
+                          }
+                        >
+                          Reject
+                        </Button>
+                      </>
+                    )}
+                    {userType === USER_TYPE.EMPLOYER && (
+                      <>
+                        <Button
+                          onClick={async () => {
+                            await apply(user.id, id);
+                            console.log("applied!");
+                          }}
+                        >
+                          View applicants
+                        </Button>
+                        <Button
+                          onClick={async () => {
+                            await apply(user.id, id);
+                            console.log("applied!");
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          onClick={async () => {
+                            await apply(user.id, id);
+                            console.log("applied!");
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    )}
+                  </CardActions>
+                </StyledCard>
+              </Flex>
+            )
           )
-        )
-      ) : (
-        <p>Please select a user</p>
-      )}
+        : browse
+        ? "No placements. Come back later!"
+        : userType === USER_TYPE.EMPLOYER
+        ? "No placements created"
+        : "You have not applied to any placements yet"}
     </Content>
   );
 }

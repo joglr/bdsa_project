@@ -16,15 +16,11 @@ import { RouteComponentProps } from "@reach/router";
 import { ContentY } from "./components/util";
 
 import { useEmployers, useStudents } from "./api";
-import { ACTION_TYPE, useStore } from "./store";
+import { ACTION_TYPE, USER_TYPE, useStore } from "./store";
 import { Employer } from "./entities/Employer";
 import styled from "styled-components";
 import { Student } from "./entities/Student";
 import User from "./entities/User";
-enum USER_TYPE {
-  STUDENT,
-  EMPLOYER,
-}
 
 const AbsoluteChildren = styled.div``;
 
@@ -43,11 +39,13 @@ export default function Landing(_: RouteComponentProps) {
           id: s.id,
           name: `${s.firstName} ${s.lastName}`,
           person: s,
+          userType: USER_TYPE.STUDENT,
         }))
       : employers.map<User>((e) => ({
           id: e.id,
           name: e.companyName,
           person: e,
+          userType: USER_TYPE.EMPLOYER,
         }));
 
   return (
@@ -114,6 +112,7 @@ export default function Landing(_: RouteComponentProps) {
                     dispatch({
                       type: ACTION_TYPE.CHANGE_USER,
                       user: user.person,
+                      userType: userType,
                     })
                   }
                 >

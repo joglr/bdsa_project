@@ -12,22 +12,17 @@ import WorkIcon from "@material-ui/icons/Work";
 import SettingsIcon from "@material-ui/icons/Settings";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import { ContentX } from "./components/util";
+import { USER_TYPE, useStore } from "./store";
 
 const routes = [
   { title: "Browse", route: "/placements", icon: <WorkIcon /> },
-  { title: "My", route: "/placements", icon: <WorkIcon /> },
-  // { title: "Students", route: "/students", icon: <PeopleIcon /> },
-  // { title: "Employers", route: "/employers", icon: <BusinessIcon /> },
-  // {
-  //   title: "Capabilities",
-  //   route: "/capabilities",
-  //   icon: <AssignmentTurnedInIcon />,
-  // },
+  { title: "My placements", route: "/my-placements", icon: <WorkIcon /> },
   { title: "Settings", route: "/settings", icon: <SettingsIcon /> },
 ];
 
 export default function Navigation() {
   const theme = useTheme<Theme>();
+  const [{ userType }] = useStore();
   return (
     <BottomNavigation
       style={{
@@ -38,16 +33,21 @@ export default function Navigation() {
       }}
     >
       <ContentX style={{ gridTemplateColumns: "1fr" }}>
-        {routes.map(({ title, route, icon }, i) => (
-          <BottomNavigationAction
-            showLabel
-            key={i}
-            component={Link}
-            to={route}
-            label={title}
-            icon={icon}
-          />
-        ))}
+        {routes
+          .filter(
+            (route) =>
+              !(route.title === "Browse" && userType === USER_TYPE.EMPLOYER)
+          )
+          .map(({ title, route, icon }, i) => (
+            <BottomNavigationAction
+              showLabel
+              key={i}
+              component={Link}
+              to={route}
+              label={title}
+              icon={icon}
+            />
+          ))}
       </ContentX>
     </BottomNavigation>
   );

@@ -48,28 +48,3 @@ export async function apply(userID: number, placementID: number) {
     }),
   });
 }
-
-// export function useApply() {
-
-//   const students = useStudents();
-//   const student = students.find((x) => x.id === user);
-
-//   const capabilities = student?.capabilities?.map((c) => c.id);
-//   console.log(capabilities);
-//   useAPI(
-//     ["student", user],
-//     {
-//       method: "put",
-//       body: JSON.stringify({
-//         ...student,
-//         capabilities,
-//         placements: [
-//           ...(student?.placements ?? []),
-//           ...(placementID !== null ? [placementID] : []),
-//         ],
-//       }),
-//     },
-//     [placementID]
-//   );
-//   return setPlacementID;
-// }
