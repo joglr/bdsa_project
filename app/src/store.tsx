@@ -2,8 +2,14 @@ import React, { createContext, useContext, useReducer, Dispatch } from "react";
 import { Employer } from "./entities/Employer";
 import { Student } from "./entities/Student";
 
+export enum USER_TYPE {
+  STUDENT,
+  EMPLOYER,
+}
+
 export type STATE = {
   user: Student | Employer | null;
+  userType: USER_TYPE | null;
 } & (
   | { status: STATUS.IDLE }
   | { status: STATUS.PENDING }
@@ -31,13 +37,18 @@ function getDefaultState(): STATE {
   return {
     status: STATUS.IDLE,
     user: null,
+    userType: null,
   };
 }
 
 type Reducer<S, A> = (prevState: S, action: A) => S;
 
 type Action =
-  | { type: ACTION_TYPE.CHANGE_USER; user: Student | Employer | null }
+  | {
+      type: ACTION_TYPE.CHANGE_USER;
+      user: Student | Employer | null;
+      userType: USER_TYPE | null;
+    }
   | { type: ACTION_TYPE.SUBMIT; value: string }
   | { type: ACTION_TYPE.CANCEL }
   | { type: ACTION_TYPE.SUCCEED; response: any }
@@ -71,7 +82,7 @@ function reducer(prevState: STATE | null, action: Action | null): STATE {
   if (prevState === null || action === null) return getDefaultState();
   switch (action.type) {
     case ACTION_TYPE.CHANGE_USER:
-      return { ...prevState, user: action.user };
+      return { ...prevState, user: action.user, userType: action.userType };
     case ACTION_TYPE.SUBMIT:
       return { ...prevState, status: STATUS.PENDING };
     case ACTION_TYPE.CANCEL:

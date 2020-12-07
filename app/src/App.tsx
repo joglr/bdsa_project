@@ -7,8 +7,9 @@ import Navigation from "./Navigation";
 
 import styled from "styled-components";
 import Landing from "./Landing";
-import { useStore } from "./store";
+import { USER_TYPE, useStore } from "./store";
 import Settings from "./Settings";
+import { usePlacements } from "./api";
 
 const Root = styled.div`
   height: 100vh;
@@ -21,8 +22,9 @@ const Main = styled.main`
 `;
 
 function App() {
-  const [{ user }] = useStore();
+  const [{ user, userType }] = useStore();
   const theme = useTheme();
+  const placements = usePlacements();
   return (
     <>
       {user === null ? (
@@ -44,7 +46,18 @@ function App() {
                   height: "100%",
                 }}
               >
-                <Placements default path="/" />
+                <Placements
+                  default={userType === USER_TYPE.STUDENT}
+                  path="/placements"
+                  browse
+                  placements={placements}
+                />
+                <Placements
+                  default={userType === USER_TYPE.EMPLOYER}
+                  path="/my-placements"
+                  browse={false}
+                  placements={user.placements}
+                />
                 <Settings path="/settings" />
               </Router>
             </Main>
