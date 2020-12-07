@@ -31,6 +31,7 @@ function App() {
   const [{ user, userType }] = useStore();
   const theme = useTheme();
   const placements = usePlacements();
+
   const studentPlacements = useStudent(user?.id ?? null)?.placements ?? [];
   const employerPlacements = useEmployer(user?.id ?? null)?.placements ?? [];
 
@@ -75,11 +76,13 @@ function App() {
                   browse
                   placements={placements}
                 />
+
                 <PlacementDetails path="/placements/:placementID" />
                 <Placements
                   default={userType === USER_TYPE.EMPLOYER}
                   path="/my-placements"
                   browse={false}
+
                   placements={
                     userType === USER_TYPE.EMPLOYER
                       ? employerPlacements
