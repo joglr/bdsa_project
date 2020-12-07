@@ -7,10 +7,7 @@ import {
 import { Link } from "@reach/router";
 import React from "react";
 import WorkIcon from "@material-ui/icons/Work";
-// import BusinessIcon from "@material-ui/icons/Business";
-// import PeopleIcon from "@material-ui/icons/People";
 import SettingsIcon from "@material-ui/icons/Settings";
-import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import { ContentX } from "./components/util";
 import { USER_TYPE, useStore } from "./store";
 
