@@ -7,8 +7,9 @@ import {
 import { Link } from "@reach/router";
 import React from "react";
 import WorkIcon from "@material-ui/icons/Work";
-import BusinessIcon from "@material-ui/icons/Business";
-import PeopleIcon from "@material-ui/icons/People";
+// import BusinessIcon from "@material-ui/icons/Business";
+// import PeopleIcon from "@material-ui/icons/People";
+import SettingsIcon from "@material-ui/icons/Settings";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import { ContentX } from "./components/util";
 
@@ -17,11 +18,12 @@ const routes = [
   { title: "My", route: "/placements", icon: <WorkIcon /> },
   // { title: "Students", route: "/students", icon: <PeopleIcon /> },
   // { title: "Employers", route: "/employers", icon: <BusinessIcon /> },
-  {
-    title: "Capabilities",
-    route: "/capabilities",
-    icon: <AssignmentTurnedInIcon />,
-  },
+  // {
+  //   title: "Capabilities",
+  //   route: "/capabilities",
+  //   icon: <AssignmentTurnedInIcon />,
+  // },
+  { title: "Settings", route: "/settings", icon: <SettingsIcon /> },
 ];
 
 export default function Navigation() {

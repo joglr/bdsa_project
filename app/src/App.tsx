@@ -2,15 +2,13 @@ import React from "react";
 import "./App.css";
 import { Grow, useTheme } from "@material-ui/core";
 import { Router } from "@reach/router";
-import Employers from "./Employers";
-import Students from "./Students";
 import Placements from "./Placements";
-import Capabilities from "./Capatabilities";
 import Navigation from "./Navigation";
 
 import styled from "styled-components";
 import Landing from "./Landing";
 import { useStore } from "./store";
+import Settings from "./Settings";
 
 const Root = styled.div`
   height: 100vh;
@@ -26,20 +24,37 @@ function App() {
   const [{ user }] = useStore();
   const theme = useTheme();
   return (
-    <Root theme={theme}>
-      <Main>
-        <Router>
-          {user !== null ? (
-            <Placements default path="/" />
-          ) : (
-            <Landing default path="/" />
-          )}
-        </Router>
-      </Main>
-      <Grow in={user !== null} mountOnEnter unmountOnExit>
-        <Navigation />
-      </Grow>
-    </Root>
+    <>
+      {user === null ? (
+        <div
+          style={{
+            height: "100vh",
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
+          }}
+        >
+          <Landing />
+        </div>
+      ) : (
+        <>
+          <Root theme={theme}>
+            <Main>
+              <Router
+                style={{
+                  height: "100%",
+                }}
+              >
+                <Placements default path="/" />
+                <Settings path="/settings" />
+              </Router>
+            </Main>
+            <Grow in={user !== null} mountOnEnter unmountOnExit>
+              <Navigation />
+            </Grow>
+          </Root>
+        </>
+      )}
+    </>
   );
 }
 

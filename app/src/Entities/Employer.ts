@@ -1,6 +1,7 @@
 import { Placement } from "./Placement";
+import User from "./User";
 
-export interface Employer {
+export interface Employer extends User {
   id: number;
   companyName: string;
   companyDescription: string;

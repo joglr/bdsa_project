@@ -15,7 +15,6 @@ import styled from "styled-components";
 import { apply } from "./api";
 import { Content } from "./components/util";
 import { Capability } from "./entities/Capability";
-import { Placement } from "./entities/Placement";
 import { useStore } from "./store";
 
 const Chips = styled.div`
