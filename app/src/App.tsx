@@ -17,7 +17,8 @@ import { Student } from "./entities/Student";
 const Root = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: 1fr ${(props) => props.theme.spacing(7)}px;
+  grid-template-rows: ${(props) => props.theme.spacing(7)}px 1fr ${(props) =>
+      props.theme.spacing(7)}px;
 `;
 
 const Main = styled.main`
@@ -43,21 +44,21 @@ function App() {
       ) : (
         <>
           <Root theme={theme}>
+            <AppBar position="relative">
+              <ContentX>
+                <Toolbar>
+                  <Typography variant="h6">
+                    Hello,{" "}
+                    {userType === USER_TYPE.EMPLOYER
+                      ? (user as Employer).companyName
+                      : `${(user as Student).firstName} ${
+                          (user as Student).lastName
+                        }`}
+                  </Typography>
+                </Toolbar>
+              </ContentX>
+            </AppBar>
             <Main>
-              <AppBar position="relative">
-                <ContentX>
-                  <Toolbar>
-                    <Typography variant="h6">
-                      Hello,{" "}
-                      {userType === USER_TYPE.EMPLOYER
-                        ? (user as Employer).companyName
-                        : `${(user as Student).firstName} ${
-                            (user as Student).lastName
-                          }`}
-                    </Typography>
-                  </Toolbar>
-                </ContentX>
-              </AppBar>
               <Router
                 style={{
                   height: "100%",
