@@ -14,7 +14,7 @@ import { useEmployer, usePlacements, useStudent } from "./api";
 import { ContentX } from "./components/util";
 import { Employer } from "./entities/Employer";
 import { Student } from "./entities/Student";
-import PlacementDetails from "./Placement";
+import PlacementDetails from "./PlacementDetails";
 
 const Root = styled.div`
   height: 100vh;
@@ -82,7 +82,6 @@ function App() {
                   default={userType === USER_TYPE.EMPLOYER}
                   path="/my-placements"
                   browse={false}
-
                   placements={
                     userType === USER_TYPE.EMPLOYER
                       ? employerPlacements
