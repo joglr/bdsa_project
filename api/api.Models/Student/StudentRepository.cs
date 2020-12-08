@@ -166,7 +166,6 @@ namespace api.Models
                 if (await placementQuery.AnyAsync())
                 {
                     var placement = await placementQuery.FirstAsync();
-                    System.Console.WriteLine("company: " + placement.EmployerCompany);
                     if (entity.Placements == null) entity.Placements = new List<Placement>();
                     entity.Placements.Add(placement);
                 }
