@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useReducer, Dispatch } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  Dispatch,
+  useEffect,
+} from "react";
 import { Employer } from "./entities/Employer";
 import { Student } from "./entities/Student";
 
@@ -34,6 +40,8 @@ export enum ACTION_TYPE {
 }
 
 function getDefaultState(): STATE {
+  if (localStorage.getItem("state"))
+    return JSON.parse(localStorage.getItem("state") ?? "{}");
   return {
     status: STATUS.IDLE,
     user: null,
@@ -68,6 +76,11 @@ export function StoreProvider({ children }: any) {
     reducer,
     getDefaultState()
   );
+  const stringifiedState = JSON.stringify(state);
+
+  useEffect(() => {
+    localStorage.setItem("store", stringifiedState);
+  }, [stringifiedState]);
 
   const contextValue: [STATE, Dispatch<Action>] = [state, dispatch];
 

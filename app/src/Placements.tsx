@@ -6,6 +6,7 @@ import { Content } from "./components/util";
 import { Placement } from "./entities/Placement";
 import PlacementCard from "./PlacementCard";
 import { USER_TYPE, useStore } from "./store";
+import { useLocalStorage } from "./util";
 
 const StyledCard = styled(PlacementCard)``;
 
@@ -15,7 +16,7 @@ export default function Placements({
 }: RouteComponentProps & { placements: Placement[]; browse: boolean }) {
   const [{ user, userType }] = useStore();
   const theme = useTheme();
-  const [skipped, setSkipped] = useState<number[]>([]);
+  const [skipped, setSkipped] = useLocalStorage<number[]>("skipped", []);
   const filteredPlacements = placements.filter(
     ({ id }) =>
       (!skipped.includes(id) && !user?.placements.find((p) => p.id === id)) ||

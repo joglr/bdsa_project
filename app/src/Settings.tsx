@@ -16,6 +16,7 @@ export default function Settings(_: RouteComponentProps) {
     >
       <Button
         onClick={async () => {
+          localStorage.clear();
           await navigate("/");
           dispatch({
             type: ACTION_TYPE.CHANGE_USER,
