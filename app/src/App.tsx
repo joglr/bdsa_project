@@ -2,7 +2,7 @@
 import React from "react";
 import "./App.css";
 import { AppBar, Grow, Toolbar, Typography, useTheme } from "@material-ui/core";
-import { Router, useLocation } from "@reach/router";
+import { Router } from "@reach/router";
 import Placements from "./Placements";
 import Navigation from "./Navigation";
 

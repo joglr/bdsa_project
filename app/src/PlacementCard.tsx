@@ -9,7 +9,6 @@ import {
   Button,
   CardActions,
   useTheme,
-  StyleRules,
   CircularProgress,
   Grow,
 } from "@material-ui/core";
