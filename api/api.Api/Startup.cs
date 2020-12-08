@@ -82,8 +82,11 @@ namespace api.Api
       {
         var context = serviceScope.ServiceProvider.GetRequiredService<PlaDatContext>();
 
-        context.Database.EnsureCreated();
-        context.GenerateData();
+        // Only regenerate data if the database is fresh
+        if (context.Database.EnsureCreated())
+        {
+          context.GenerateData();
+        }
       }
 
       if (env.IsDevelopment())
