@@ -68,10 +68,7 @@ export async function apply(
     body: JSON.stringify({
       ...student,
       capabilities: student.capabilities.map((c: Capability) => c.id),
-      placements: [
-        // ...student.placements.map((p: Placement) => p.id),
-        placementID,
-      ],
+      placements: [placementID],
     }),
   });
 
