@@ -1,6 +1,6 @@
 import { Grid as Flex, useTheme } from "@material-ui/core";
 import { RouteComponentProps } from "@reach/router";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Content } from "./components/util";
 import { Placement } from "./entities/Placement";

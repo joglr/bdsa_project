@@ -80,7 +80,7 @@ export default function PlacementCard({
                 {rest.employer !== null ? (
                   <span>{rest.employer.companyName} · </span>
                 ) : (
-                  (user as Employer).companyName
+                  <span>{(user as Employer).companyName} · </span>
                 )}
                 <span>
                   {minHours}-{maxHours} hours
