@@ -94,7 +94,6 @@ namespace api.Api
         System.Console.WriteLine("Development");
         app.UseDeveloperExceptionPage();
         app.UseCors(AllowedDevelopmentOrigins);
-
       }
       else
       {

@@ -12,42 +12,55 @@ function useAPI(path: any[], options: any = {}, deps: DependencyList = []) {
   return useFetch([API_ROOT, ...path].join("/"), options, deps);
 }
 
-export function useEmployers(): Employer[] {
+export function useEmployers(deps?: DependencyList): Employer[] {
   const result = useAPI(["employer"]);
   return result !== null ? result.map((e: Employer) => e) : [];
 }
 
-export function useEmployer(employerID: number | null): Student | null {
-  const result = useAPI(["employer", employerID], {}, [employerID]);
+export function useEmployer(
+  employerID: number | null,
+  deps?: DependencyList
+): Student | null {
+  const result = useAPI(["employer", employerID], {}, [
+    employerID,
+    ...(deps ?? []),
+  ]);
   return result !== null ? (result as Student) : null;
 }
 
-export function useStudents(): Student[] {
-  const result = useAPI(["student"]);
+export function useStudents(deps?: DependencyList): Student[] {
+  const result = useAPI(["student"], {}, deps);
   return result !== null ? result.map((s: Student) => s) : [];
 }
 
-export function useStudent(studentID: number | null): Student | null {
-  const result = useAPI(["student", studentID], {}, [studentID]);
+export function useStudent(
+  studentID: number | null,
+  deps?: DependencyList
+): Student | null {
+  const result = useAPI(["student", studentID], {}, [
+    studentID,
+    ...(deps ?? []),
+  ]);
   return result !== null ? (result as Student) : null;
 }
 
-export function usePlacements(): Placement[] {
-  const result = useAPI(["placement"]);
+export function usePlacements(deps?: DependencyList): Placement[] {
+  const result = useAPI(["placement"], {}, deps);
   return result !== null ? result.map((p: Placement) => p) : [];
 }
 
 export function usePlacement(
-  placementID: number | null
+  placementID: number | null,
+  deps?: DependencyList
 ): (Placement & { students: Student[] }) | null {
-  const result = useAPI(["placement", placementID]);
+  const result = useAPI(["placement", placementID], {}, deps);
   return result !== null
     ? (result as Placement & { students: Student[] })
     : null;
 }
 
-export function useCapabilities(): Capability[] {
-  const result = useAPI(["capability"]);
+export function useCapabilities(deps?: DependencyList): Capability[] {
+  const result = useAPI(["capability"], {}, deps);
   return result !== null ? result.map((c: Capability) => c) : [];
 }
 

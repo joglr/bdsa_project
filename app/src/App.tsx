@@ -2,7 +2,7 @@
 import React from "react";
 import "./App.css";
 import { AppBar, Grow, Toolbar, Typography, useTheme } from "@material-ui/core";
-import { Router } from "@reach/router";
+import { Router, useLocation } from "@reach/router";
 import Placements from "./Placements";
 import Navigation from "./Navigation";
 
@@ -29,11 +29,14 @@ const Main = styled.main`
 
 function App() {
   const [{ user, userType }] = useStore();
+  const pathname = window.location.pathname;
   const theme = useTheme();
-  const placements = usePlacements();
+  const placements = usePlacements([pathname]);
 
-  const studentPlacements = useStudent(user?.id ?? null)?.placements ?? [];
-  const employerPlacements = useEmployer(user?.id ?? null)?.placements ?? [];
+  const studentPlacements =
+    useStudent(user?.id ?? null, [pathname])?.placements ?? [];
+  const employerPlacements =
+    useEmployer(user?.id ?? null, [pathname])?.placements ?? [];
 
   return (
     <>
@@ -76,7 +79,6 @@ function App() {
                   browse
                   placements={placements}
                 />
-
                 <PlacementDetails path="/placements/:placementID" />
                 <Placements
                   default={userType === USER_TYPE.EMPLOYER}
